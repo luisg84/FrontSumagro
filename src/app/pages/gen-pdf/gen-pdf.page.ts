@@ -96,6 +96,20 @@ async deleteOrder(index, id) {
 
 }
 
+
+
+async cerraOrden(ingenioID,OrdenID) {
+  // tslint:disable-next-line:prefer-const
+  let status = 'TRANSIT';
+  let token = await this.authService.getToken();
+  this.sumagroAppService.statusUpdate(token,ingenioID,OrdenID,status).subscribe( resp => {
+    //this.presentAlert(resp);
+    console.log(resp);
+    //this.orden = resp;
+   // console.log(`ordenes`, resp[2].enterpriseName);
+  });
+  }
+
 permisos(){
   this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.CAMERA).then(
     result => console.log('Has permission?',result.hasPermission),

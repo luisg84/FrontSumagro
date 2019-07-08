@@ -58,7 +58,7 @@ export class SumagroAppService {
 
     });
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.get(`${this.endPoint}/sumagro-app/order?status=CAPTURED`, this.options);
+    return this.httpClient.get(`${this.endPoint}/sumagro-app/order`, this.options);
 
   }
 
@@ -181,6 +181,17 @@ export class SumagroAppService {
     return this.httpClient.get(`${this.endPoint}/sumagro-app/order/${idOrden}`, this.options);
     ///sumagro-app/order/:orderId
     //return this.httpClient.get(`${this.endPoint}sumagro-app/ingenio/${idIngenio}/order/${idOrden}`, this.options);
+  }
+  
+  statusUpdate(token, ingenioID,OrdenID,status:string): Observable<any> {
+    this.options.headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      // tslint:disable-next-line:object-literal-shorthand
+      // tslint:disable-next-line:object-literal-key-quotes
+      'Authorization': token
+    });
+    // tslint:disable-next-line:max-line-length
+    return this.httpClient.patch(`${this.endPoint}/sumagro-app/ingenio/${ingenioID}/order/${OrdenID}`, JSON.stringify({status}), this.options)
   }
 
 

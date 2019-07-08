@@ -75,14 +75,20 @@
             </ion-col>
         </ion-row>
         <ion-row *ngIf="Objorden.status !='PENDING'">
-            <ion-col size="3">
+            <ion-col size="3" *ngIf="Objorden.status!='CAPTURED'">
                 <ion-button expand="block" (click)='generPDF(Objorden.id)' class="orange buttonSquare">
                     <img src="../../../assets/icon/pdfIcon.png" alt="" class='iconsize'>
                 </ion-button>
             </ion-col>
-            <ion-col size="3">
+            <ion-col size="3" *ngIf="Objorden.status!='CAPTURED'">
                 <ion-button expand="block" (click)='mandarEmail(Objorden.ingenioId ,Objorden.id)' class="gris buttonSquare">
                     <img src="../../../assets/icon/sendIcon.png" alt="" class='iconsize'>
+                </ion-button>
+            </ion-col>
+            <ion-col size="3" *ngIf="Objorden.status=='CAPTURED'">
+                <ion-button expand="block" (click)="cerraOrden(Objorden.ingenioId, Objorden.id)" class="grenHig buttonSquare">
+                    <!-- <img src="../../../assets/icon/sendIcon.png" alt="" class='iconsize'> -->
+                    <h5 class="tlt2">Cerrar Orden</h5>
                 </ion-button>
             </ion-col>
         </ion-row>

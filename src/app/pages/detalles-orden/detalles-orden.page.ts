@@ -121,7 +121,17 @@ export class DetallesOrdenPage implements OnInit {
           }
 
           
-
+          async cerraOrden(ingenioID,OrdenID) {
+            // tslint:disable-next-line:prefer-const
+            let status = 'TRANSIT';
+            let token = await this.authService.getToken();
+            this.sumagroAppService.statusUpdate(token,ingenioID,OrdenID,status).subscribe( resp => {
+              //this.presentAlert(resp);
+              console.log(resp);
+              //this.orden = resp;
+             // console.log(`ordenes`, resp[2].enterpriseName);
+            });
+            }
 
 
           async cargando(message) {
