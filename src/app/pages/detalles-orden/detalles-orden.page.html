@@ -9,12 +9,7 @@
                                 Detalle de la Orden
                             </div>
                         </ion-col>
-                        <ion-col size="12">
-                            <div class="factory">
-                                <img src="../../../assets/img/ingenio.png" alt="" class="imgF">
-                            </div>
-
-                        </ion-col>
+                       
                         <ion-col size="12" *ngIf="bandera">
                             <p class="tlt center">{{Objorden.client}}</p>
                         </ion-col>
@@ -22,15 +17,11 @@
                         <ion-col size="6" align-self-start *ngIf="bandera">
                             <p class="tlt">Fecha: {{Objorden.shippingDate}}</p>
                         </ion-col>
-                        <ion-col size="6" *ngIf="bandera">
-                            <p class="tlt">Total general: ${{Objorden.totalGeneral}}.00</p>
-                        </ion-col>
+                        
                         <ion-col size="6" align-self-start *ngIf="bandera">
                             <p class="tlt"># Remisión: {{Objorden.remissionNumber}}</p>
                         </ion-col>
-                        <ion-col size="6" *ngIf="bandera">
-                            <p class="tlt">Anticipo: ${{Objorden.advance}}.00</p>
-                        </ion-col>
+                       
 
 
                     </ion-row>
@@ -59,11 +50,7 @@
                                         <ion-card-title>Formula: {{subordenes.description}}</ion-card-title>
                                         <h4>
                                             {{subordenes.quantity}} bultos</h4>
-                                        <h4>
-                                            Precio unitario ${{subordenes.unitPrice}}.00</h4>
-
-                                        <h4>
-                                            Total ${{subordenes.total}}.00</h4>
+                                        
                                     </ion-col>
                                 </ion-row>
                             </ion-grid>

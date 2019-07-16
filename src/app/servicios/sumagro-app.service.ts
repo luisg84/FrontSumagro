@@ -23,7 +23,30 @@ export class SumagroAppService {
     console.log(body);
     return body || { };
   }
+  obtenerOrdenesAlmacen(token){
+    this.options.headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      // tslint:disable-next-line:object-literal-shorthand
+      // tslint:disable-next-line:object-literal-key-quotes
+      'Authorization': token
+    });
+    // tslint:disable-next-line:max-line-length
 
+    return this.httpClient.get(`${this.endPoint}/sumagro-app/warehouse/oders`, this.options).pipe(map(this.extractData));
+  
+  }
+  getRemissionNumber(token){
+    this.options.headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      // tslint:disable-next-line:object-literal-shorthand
+      // tslint:disable-next-line:object-literal-key-quotes
+      'Authorization': token
+    });
+    // tslint:disable-next-line:max-line-length
+return new Promise((resolve,reject)=>{
+     this.httpClient.get(`${this.endPoint}/sumagro-app/remission/number`, this.options).pipe(map(this.extractData)).subscribe(data=> resolve(data));
+  })
+  }
   userUpdate(token, userUpdate): Observable<any> {
     this.options.headers = new HttpHeaders({
       'Content-Type':  'application/json',
@@ -80,7 +103,7 @@ export class SumagroAppService {
     return this.httpClient.get(`${this.endPoint}/sumagro-app/generate-pdf/${id}`, tempHeaders);
   }
 
-  deleteOrder(token, id: string): Observable<any> {
+  deleteOrder(token, id: string) {
     this.options.headers = new HttpHeaders({
       'Content-Type':  'application/json',
       // tslint:disable-next-line:object-literal-shorthand
@@ -89,8 +112,9 @@ export class SumagroAppService {
 
     });
     // tslint:disable-next-line:max-line-length
-    return this.httpClient.delete(`${this.endPoint}/sumagro-app/order/${id}`, this.options);
-
+    return new Promise((resolve,reject)=>{
+     this.httpClient.patch(`${this.endPoint}/sumagro-app/warehouse/oders/view/${id}`,{}, this.options).subscribe(data=> resolve(data));
+  })
   }
 
   obtenerInegenios(token): Observable<any> {

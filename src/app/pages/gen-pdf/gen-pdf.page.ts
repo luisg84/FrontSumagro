@@ -49,7 +49,7 @@ private fileTransfer: any;
   async solicitar() {
 // tslint:disable-next-line:prefer-const
 let token = await this.authService.getToken();
-this.sumagroAppService.obtenerOrdenes(token).subscribe( (resp: Orden[] ) => {
+this.sumagroAppService.obtenerOrdenesAlmacen(token).subscribe( (resp: Orden[] ) => {
   this.presentAlert(resp);
   this.orden = resp;
  // console.log(`ordenes`, resp[2].enterpriseName);
@@ -88,11 +88,7 @@ async deleteOrder(index, id) {
 // tslint:disable-next-line:align
   // tslint:disable-next-line:prefer-const
   let token = await this.authService.getToken();
-  this.sumagroAppService.deleteOrder(token, id).subscribe( resp  => {
-    // console.log(resp);
-  // this.orden = resp;
- // console.log(`ordenes`, resp[2].enterpriseName);
-});
+  await this.sumagroAppService.deleteOrder(token, id);
 
 }
 

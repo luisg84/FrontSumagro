@@ -39,39 +39,18 @@ export class DetallesOrdenPage implements OnInit {
   constructor(private sumagroAppService: SumagroAppService, public authService: AuthService, public alertController: AlertController, public router: Router,
     public fileOpener: FileOpener,private transfer: FileTransfer, private file: File, private androidPermissions: AndroidPermissions, public route: ActivatedRoute,public loadingController: LoadingController) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.idOrden = this.route.snapshot.paramMap.get('idor');
-   // this.idOingenio = this.route.snapshot.paramMap.get('idin');
     console.log("idor: "+ this.idOrden);
-    this.solicitarDetalles(this.idOrden );
+    await this.solicitarDetalles(this.idOrden );
     this.cargando('Cargando');
   }
 
-  // async solicitarDetalles(id) {
-  //   // tslint:disable-next-line:prefer-const
-  //   let token = await this.authService.getToken();
-  //   this.sumagroAppService.detallesOrden(token,id).subscribe( (resp: Orden[] ) => {
-     
-  //     this.orden = resp;
-  //    // console.log(`ordenes`, resp[2].enterpriseName);
-  //   });
-  //   }
-
-    // async solicitarDetalles(idor,idin) {
-    //   // tslint:disable-next-line:prefer-const
-    //   let token = await this.authService.getToken();
-    //   // tslint:disable-next-line:typedef-whitespace
-    //   this.sumagroAppService.detallesOrden(token, idor,idin ).subscribe( (resp: Orden ) => {
-    //    this.Objorden = resp;
-    //    console.log(this.Objorden);
-    //    // console.log(`ordenes`, resp[2].enterpriseName);
-    //   });
-    //   }
 
     async solicitarDetalles(idor) {
-      // tslint:disable-next-line:prefer-const
+  
       let token = await this.authService.getToken();
-      // tslint:disable-next-line:typedef-whitespace
+   
       this.sumagroAppService.detallesOrden(token, idor ).subscribe( (resp: Orden ) => {
         this.bandera = true;
        this.Objorden = resp;
@@ -79,7 +58,7 @@ export class DetallesOrdenPage implements OnInit {
        this.loadingController.dismiss();
        console.log(this.Objorden);
        console.log(this.suborden);
-       // console.log(`ordenes`, resp[2].enterpriseName);
+      
       });
       }
 
@@ -94,14 +73,13 @@ export class DetallesOrdenPage implements OnInit {
         }
 
         async SolicitarEmali(ingenioID,orderId){
-            // tslint:disable-next-line:prefer-const
+         
         let token = await this.authService.getToken();
         this.sumagroAppService.mandarEmail(token, ingenioID,orderId).subscribe( resp=> {
           this.loadingController.dismiss();
-          //this.presentAlert(resp);
+         
           console.log(resp);
-          //this.orden = resp;
-         // console.log(`ordenes`, resp[2].enterpriseName);
+         
         });
         }
 
@@ -115,21 +93,31 @@ export class DetallesOrdenPage implements OnInit {
             console.log('download completed: ' + entry.toURL());  
             this.fileOpener.open(entry.toURL(),'application/pdf');
           }, (error) => {  
-              //here logging our error its easier to find out what type of error occured.  
+                
               console.log('download failed: ' + JSON.stringify(error));  
           });  
           }
 
           
           async cerraOrden(ingenioID,OrdenID) {
-            // tslint:disable-next-line:prefer-const
+            
+            await this.cargando('Cerrando pedido');
             let status = 'TRANSIT';
             let token = await this.authService.getToken();
-            this.sumagroAppService.statusUpdate(token,ingenioID,OrdenID,status).subscribe( resp => {
-              //this.presentAlert(resp);
+            this.sumagroAppService.statusUpdate(token,ingenioID,OrdenID,status).subscribe( async(resp) => {
+              
               console.log(resp);
-              //this.orden = resp;
-             // console.log(`ordenes`, resp[2].enterpriseName);
+              this.loadingController.dismiss();
+              let alertCloseOrder = await this.alertController.create({
+                header: 'Alert',
+                subHeader: "Orden Actualizada",
+                message: "Orden cerrada.",
+                buttons: ['OK']
+              });
+              await alertCloseOrder.present();
+              await alertCloseOrder.onDidDismiss();
+              this.cancel();
+              
             });
             }
 
@@ -142,7 +130,7 @@ export class DetallesOrdenPage implements OnInit {
               res.onDidDismiss().then((dis)=>{
                 console.log("Dialogo cerrado")
               });
-              //2038100798
+             
             });
             try{
                 this.closeLoader();

@@ -5,18 +5,14 @@ export interface Orden {
   remissionNumber: number;
   shippingDate: string;
   subOrders: subOrders[];
-  totalGeneral: number;
   ingenioId: string;
-  advance: number;
   status: string;
 }
 
 export interface subOrders {
   description: string;
   quantity: number;
-  total: number;
-  unit: string;
-  unitPrice: number;
+  unit: string; 
   status: boolean;
 }
 

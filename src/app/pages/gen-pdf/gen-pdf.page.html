@@ -12,11 +12,7 @@
             <ion-col size="12">
                 <div *ngFor="let ordenes of orden; let index = index">
                     <ion-card mode='ios' *ngIf="(ordenes.status !='PENDING')&&(ordenes.status !='DELIVERED')">
-                        <!-- <ion-card-header>
-                                <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-                                <ion-card-title>Card Title</ion-card-title>
-                            </ion-card-header> -->
-                        <!-- *ngFor="let ordenes of orden" -->
+                      
                         <ion-card-content>
                             <ion-grid>
                                 <ion-row>
@@ -29,8 +25,7 @@
                                         <h4>
                                             {{ordenes.shippingDate}}</h4>
 
-                                        <h4>
-                                            ${{ordenes.totalGeneral}}.00</h4>
+                                    
                                     </ion-col>
 
                                     <ion-col size="3">

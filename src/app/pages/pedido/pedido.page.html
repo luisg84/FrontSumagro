@@ -11,7 +11,7 @@
 
         <ion-list>
             <div *ngIf="!stateForm" class='formGeneral'>
-                <ion-list-header>Single Selection</ion-list-header>
+                <ion-list-header>Selecciona al cliente</ion-list-header>
 
                 <ion-item>
                     <ion-label>Ingenio</ion-label>
@@ -21,71 +21,16 @@
                     </ion-select>
                 </ion-item>
 
-
-                <!-- <ion-item>
-                    <ion-label position="floating">Nombre de la empresa y razón social</ion-label>
-                    <ion-input required='true' type="text" [(ngModel)]="nomEmpresae" name="nomEmpresa"></ion-input>
-                </ion-item> -->
-
-
-                <!-- <ion-item>
-                    <ion-label position="floating">RFC</ion-label>
-                    <ion-input type="text" [(ngModel)]="RFC" name="RFC"></ion-input>
-                </ion-item> -->
-
-                <!-- <ion-item>
-                    <ion-label position="floating">Dirección</ion-label>
-                    <ion-input type="text" [(ngModel)]="Direccion" name="Direccion"></ion-input>
-                </ion-item> -->
-
-                <!-- <ion-item>
-                    <ion-label position="floating">Cliente</ion-label>
-                    <ion-input type="Cliente" [(ngModel)]="Cliente" name="eCliente"></ion-input>
-                </ion-item> -->
-
-                <!-- <ion-item>
-                    <ion-label position="floating">Domicilio del cliente</ion-label>
-                    <ion-input type="text" [(ngModel)]="domiDeCliente" name="domiDeCliente"></ion-input>
-                </ion-item> -->
-
-                <ion-item>
+                <ion-item *ngIf="remissionNumber">
                     <ion-label position="floating">Número de remisión</ion-label>
-                    <ion-input type="number" [(ngModel)]="numRem" name="numRem"></ion-input>
+                    <ion-input type="text" value="{{remissionNumber.currentRemissionNumber}}" disabled="true"></ion-input>
                 </ion-item>
-
                 <ion-item>
-                    <ion-label position="floating">Fecha de salida</ion-label>
-                    <ion-input type="text" [(ngModel)]="fechaSalida" name="fechsalida"></ion-input>
+                    <ion-label position="floating">Fecha de compra</ion-label>
+                    <ion-datetime displayFormat="MMM DD, YYYY HH:mm"  (ionChange)="seleccion($event)"></ion-datetime>
                 </ion-item>
 
-                <!-- <ion-item>
-                     fechaSalida
-                                <ion-label>Fecha de salida de carga</ion-label>
-                                <ion-datetime display-format="MMM DD, YYYY HH:mm" [(ngModel)]="fechaSalida"></ion-datetime>
-                            </ion-item> -->
-
-                <!-- <ion-item>
-                                <ion-label position="floating">Fecha de salida de carga</ion-label>
-                                <ion-input type="date" [(ngModel)]="fechaSalida" name="fechaSalida"></ion-input>
-                            </ion-item> -->
-
-                <ion-item>
-                    <ion-label position="floating">Total General</ion-label>
-                    <ion-input type="number" [(ngModel)]="Totgen" name="Totgen"></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label position="floating">Anticipo</ion-label>
-                    <ion-input type="number" [(ngModel)]="anticipo" name="ticipoan"></ion-input>
-                </ion-item>
             </div>
-
-
-            <!-- <div class="loginbtn">
-                <ion-button (click)='numeroPedidos()' class="btnlogin" color="success">Agregar Producto</ion-button>
-                </div> -->
-
-
 
             <div *ngIf="stateForm" class='datosProducto'>
 
@@ -95,8 +40,11 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="floating">Unidad</ion-label>
-                    <ion-input type="text" [(ngModel)]="Unidad" name="Unidad"></ion-input>
+                    <ion-label>Unidad</ion-label>
+                    <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" [(ngModel)]="Unidad" placeholder="Unidad">
+                    <ion-select-option value="SACOS" selected>SACOS</ion-select-option>
+                    <ion-select-option value="PESOS">PESOS</ion-select-option>
+                    </ion-select>
                 </ion-item>
 
                 <ion-item>
@@ -105,17 +53,7 @@
                     <ion-input type="text" [(ngModel)]="DescFormula" name="descFormula"></ion-input>
                 </ion-item>
 
-                <ion-item>
-                    <ion-label position="floating">Precio Unitario
-                    </ion-label>
-                    <ion-input type="number" [(ngModel)]="PreUnitario" name="preUnitario"></ion-input>
-                </ion-item>
-
-                <ion-item>
-                    <ion-label position="floating">Total Individual
-                    </ion-label>
-                    <ion-input type="number" [(ngModel)]="TotInd" name="totIndividual"></ion-input>
-                </ion-item>
+               
             </div>
 
         </ion-list>
@@ -130,7 +68,7 @@
 
 
 
-            <ion-button (click)='enviarInfo()' *ngIf="stateForm" class="btnlogin" color="secondary" type="submit">Enviar Informacion</ion-button>
+            <ion-button (click)='enviarInfo()' *ngIf="stateForm" class="btnlogin" color="secondary" type="submit">Enviar Información</ion-button>
 
             <ion-button (click)='cancel()' class="btnlogin orange" type="submit">Cancelar</ion-button>
 
